@@ -1,0 +1,21 @@
+解法一：
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT DISTINCT(Emp1.Salary) FROM Employee Emp1 WHERE (N-1) = (SELECT COUNT(
+      DISTINCT(Emp2.Salary))
+      FROM Employee Emp2 WHERE Emp2.Salary > Emp1.Salary)
+  );
+END
+
+解法二：
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  declare var Int;
+  set var = N-1;
+  RETURN (
+     select distinct Salary from Employee order by Salary desc limit var,1
+  );
+END
+
